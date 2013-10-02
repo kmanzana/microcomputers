@@ -2,7 +2,7 @@
 // Write C statement(s) that sets bit 1 of Port T, without changing any of the other bits, if bit
 // 2 is clear
 
-if (PTT | 0x04)
+if (~PTT & 0x04)
 	PTT |= 0x02;
 
 // (b)
