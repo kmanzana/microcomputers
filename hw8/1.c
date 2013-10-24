@@ -26,7 +26,7 @@ void main(void) {
   char prescaler = 0x03;
   char IC_channel = 0x08; // enable input-capture 3
   char IC_edge_to_capture = 0x40; // capture rising edges of the PT3 Pin
-  char OC_channel = 0x04; // OC2
+  char OC_channel = 0x04; // OC2 and PT2
   char OC_action = 0; // 0 corresponds to no action
 
   DDRT = PTT_PTT2_MASK;
