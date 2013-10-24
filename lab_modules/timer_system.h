@@ -1,5 +1,4 @@
-#include "misc.h"
-
+#include "derivative.h"
 
 void setup_timer(char prescaler);
 
@@ -16,4 +15,4 @@ void setup_timer(char prescaler);
 // channel OC2 and PT2 with no action
 void setup_output_compare(char channel, char action);
 
-void setup_input_capture(char channel, char edge_to_capture)
+void setup_input_capture(char channel, char edge_to_capture);
