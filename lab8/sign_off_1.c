@@ -3,9 +3,10 @@
 #include "lcd.h"
 
 void main(void) {
-  char my_str[] = "Waddup Yo!";
+  // PM1 input
+  // PT7 output
+  // output compare ISR
 
-  print_LCD(my_str);
 
   EnableInterrupts;
 

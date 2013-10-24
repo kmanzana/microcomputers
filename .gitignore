@@ -30,3 +30,5 @@ prm/
 # Other CodeWarrior Source files
 # datapage.c
 # Start12.c
+
+.DS_Store
