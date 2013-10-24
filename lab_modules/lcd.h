@@ -1,4 +1,5 @@
 #include "misc.h"
+#include "derivative.h"
 
 /* A collection of functions for use with the LCD */
 

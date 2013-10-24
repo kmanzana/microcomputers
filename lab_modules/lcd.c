@@ -3,6 +3,8 @@
 void initialize_LCD(void) {
   int i;
 
+  DDRT = 0x3F; // Set PT0-PT5 for output
+
   for (i = 0; i < 100; i++) // delay 100ms to allow LCD powerup
     delay_u_sec(1000);
 
