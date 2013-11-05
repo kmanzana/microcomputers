@@ -1,0 +1,30 @@
+init ATD converter for detector
+setup PWM module to output to Port T 0-3
+
+setup output compare system to generate interrupts for timing
+setup input compare system to generate interrupts on rising edge
+
+def input compare detector interrupt
+  stop motors
+  enable output compare for backup timing
+  put motors in reverse same speed
+end
+
+def output compare backup interrupt
+  stop motors
+  enable output compare for turn timing
+  left motor forward
+  right motor reverse
+end
+
+def output compare turn interrupt
+  stop motors
+  enable input compare for detector rising edge
+  turn motors on, right > left
+end
+
+turn motors on, right > left
+
+loop
+  feed dog
+end
