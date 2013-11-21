@@ -2,22 +2,14 @@
 #include <serLCD.h>
 #include "EmonLib.h"
 
-void setupLCD();
-void clearLCD();
-
 serLCD lcd(1);
 EnergyMonitor emonCT1;                   // Create an instance
 EnergyMonitor emonCT2;
-
-// Attach the serial display's RX line to digital pin 2
-SoftwareSerial mySerial(0, 1); // pin 3 = RX (unused), pin 2 = TX
 
 void setup() {
   lcd.setType(6);
   lcd.clear();
   // Serial.begin(9600);
-
-  // setupLCD();
 }
 
 void loop() {
@@ -47,37 +39,9 @@ void measureAndSerialPrintPower() {
 }
 
 void measureAndLCDPrintVoltage() {
-  char voltageString[20];
   int voltage = emonCT1.readVcc();
 
-  // mySerial.print("Voltage: ");
-  // mySerial.print(voltage);
-  // mySerial.print(" mV");
   lcd.print("Voltage: ");
   lcd.print(voltage);
   lcd.print(" mV");
-}
-
-void setupLCD() {
-  mySerial.begin(9600);
-  delay(500); // wait for display to boot up
-
-  // mySerial.write(124);
-  // mySerial.write(0x03);
-}
-
-void clearLCD() {
-  // mySerial.write(254); // move cursor to beginning of first line
-  // mySerial.write(128);
-
-  // mySerial.write("                    "); // clear display
-  // mySerial.write("                    ");
-  // mySerial.write("                    ");
-  // mySerial.write("                    ");
-
-  mySerial.write(0xFE);
-  mySerial.write(0x01);
-
-  mySerial.write(254); // move cursor to beginning of first line
-  mySerial.write(128);
 }
