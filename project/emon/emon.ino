@@ -2,6 +2,8 @@
 #include <serLCD.h>
 #include "EmonLib.h"
 
+void setupCurrentSensors();
+
 serLCD lcd(1);
 EnergyMonitor emonCT1;                   // Create an instance
 // EnergyMonitor emonCT2;
@@ -9,39 +11,47 @@ EnergyMonitor emonCT1;                   // Create an instance
 void setup() {
   pinMode(2, OUTPUT);
   digitalWrite(2, HIGH);
-  digitalWrite(2, LOW);
 
-  lcd.setType(6);
+  lcd.setType(5);
   lcd.clear();
-  lcd.setBrightness(1);
+  lcd.setBrightness(30);
+
+  // setContrast(0x20);
   // Serial.begin(9600);
+  setupCurrentSensors();
 }
 
 void loop() {
+  lcd.clear();
   lcd.setCursor(1, 1);
 
-  measureAndLCDPrintVoltage();
+  // measureAndLCDPrintVoltage();
+  measureAndLCDPrintPower();
+  // lcd.print(5.0 * analogRead(A2) / 1024.0);
 
   delay(1000);
 }
 
-// void setupCurrentSensors() {
-//   emonCT1.current(8, 111.1);             // Current: input pin, calibration.
+void setupCurrentSensors() {
+  emonCT1.current(A2, 57.9);             // Current: input pin, calibration. 60.6
 //   emonCT2.current(8, 111.1);
-// }
+}
 
-// void measureAndSerialPrintPower() {
-//   double Irms = emonCT1.calcIrms(1480);  // Calculate Irms only; # of samples
-//   double voltage = emonCT1.readVcc();
+void measureAndLCDPrintPower() {
+  double Irms = emonCT1.calcIrms(1480);  // Calculate Irms only; # of samples
+  double voltage = emonCT1.readVcc();
 
-//   Serial.print(voltage);
-//   Serial.print(" ");
-//   Serial.print(Irms * 230.0);    // Apparent power
-//   Serial.print(" ");
-//   Serial.println(Irms);          // Irms
+  lcd.print("EMon: ");
+  lcd.print(voltage);
+  lcd.print("       ");
+  lcd.print(Irms * 120.0);    // Apparent power
+  lcd.print("       ");
+  lcd.print(Irms);          // Irms
+  lcd.print("       ");
+  lcd.print(analogRead(A2));
 
-//   delay(50);
-// }
+  delay(50);
+}
 
 void measureAndLCDPrintVoltage() {
   float voltage = emonCT1.readVcc();
@@ -50,3 +60,14 @@ void measureAndLCDPrintVoltage() {
   lcd.print(voltage);
   lcd.print(" mV");
 }
+
+void setContrast(int contrast) {
+   lcd.write(254);
+   lcd.write(80);
+   lcd.write(contrast);
+}
+
+void lcdPrintLine(char string[]) {
+
+}
+
