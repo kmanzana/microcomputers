@@ -6,7 +6,7 @@ void setupCurrentSensors();
 
 serLCD lcd(1);
 EnergyMonitor emonCT1;                   // Create an instance
-// EnergyMonitor emonCT2;
+EnergyMonitor emonCT2;
 
 void setup() {
   pinMode(2, OUTPUT);
@@ -33,13 +33,13 @@ void loop() {
 }
 
 void setupCurrentSensors() {
-  emonCT1.current(A2, 57.9);             // Current: input pin, calibration. 60.6
-//   emonCT2.current(8, 111.1);
+  emonCT1.current(A1, 57.9);             // Current: input pin, calibration. 60.6
+  emonCT2.current(A2, 57.9);
 }
 
 void measureAndLCDPrintPower() {
-  double Irms = emonCT1.calcIrms(1480);  // Calculate Irms only; # of samples
-  double voltage = emonCT1.readVcc();
+  double Irms = emonCT1.calcIrms(1480) + emonCT2.calcIrms(1480);  // Calculate Irms only; # of samples
+  double voltage = (emonCT1.readVcc() + emonCT1.readVcc()) / 2;
 
   lcd.print("EMon: ");
   lcd.print(voltage);
@@ -47,6 +47,8 @@ void measureAndLCDPrintPower() {
   lcd.print(Irms * 120.0);    // Apparent power
   lcd.print("       ");
   lcd.print(Irms);          // Irms
+  lcd.print("       ");
+  lcd.print(analogRead(A1));
   lcd.print("       ");
   lcd.print(analogRead(A2));
 
