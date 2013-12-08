@@ -18,10 +18,7 @@ void setup() {
 }
 
 void loop() {
-  lcd.setCursor(1, 1); // position (x, y)
-
   printMeasuredPower();
-
   delay(1000);
 }
 
@@ -31,16 +28,25 @@ void setupCurrentSensors() {
 }
 
 void printMeasuredPower() {
-  double irms = emonCT1.calcIrms(1480) + emonCT2.calcIrms(1480);
+  double irms = 8 / 7.8 * ((emonCT1.calcIrms(1480) - 0.1) + (emonCT2.calcIrms(1480) - 0.1));
   double voltage = emonCT1.readVcc();
 
-  lcd.print("EMon: ");
-  lcd.print(voltage);
-  lcd.print("       ");
-  lcd.print(irms);          // Irms
-  lcd.print("       ");
-  lcd.print(irms * 120.0);    // Apparent power
-  lcd.print("       ");
+  lcd.selectLine(1);
+  lcd.print("        EMon        ");
+
+  lcd.selectLine(2);
+  // lcd.print("Voltage: 120 V      ");
+
+  // lcd.selectLine(3);
+  lcd.print("I rms: ");
+  lcd.print(irms);
+  lcd.print(" A       ");
+
+  // lcd.setCursor(4, 1);
+  // lcd.selectLine(4);
+  lcd.print("Power (S): ");
+  lcd.print(irms * 120.0);
+  lcd.print(" W     ");
 
   delay(50);
 }
@@ -54,4 +60,3 @@ void setContrast(int contrast) {
 void lcdPrintLine(char string[]) {
 
 }
-
